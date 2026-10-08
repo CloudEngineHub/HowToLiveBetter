@@ -60,6 +60,8 @@ AI 助手 skill 支持 Claude Code 和 Codex。装上后直接问「替朋友担
 
 [高性价比人生指南行动版](https://apps.apple.com/cn/app/id6818596108)，GUGU VITALITY LIMITED 做的 iOS App：左右滑卡片决定做不做，做一次的放进清单，要重复做的设成打卡，离线可用；免费版清单和打卡有数量限制
 
+[高性价比人生指南结构化数据集](https://github.com/sin0317/htlb-dataset)，[sin0317](https://github.com/sin0317) 做的结构化数据：把全书 672 条解析为 JSON / CSV / SQLite，每日自动同步上游，作为所有衍生工具的统一数据源（正文 CC BY 4.0，代码 MIT）
+
 </td></tr>
 </table>
 
