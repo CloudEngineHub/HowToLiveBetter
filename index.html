@@ -1002,7 +1002,7 @@ let TOC_ON = null, TOC_SELK = '';
 const TOC_MAN = new Map();
 // 选了节就展开那一节；看全部章节时跟着 spy 展开正在读的那节，读到页首就全收起。
 // 高亮行滚出侧栏可视区时把侧栏拉过去，只动侧栏自己的 scrollTop，不碰页面滚动。
-function tocSync(hit){
+function tocSync(hit, { follow = true } = {}){
   const selk = [...state.sec].join();
   if (selk !== TOC_SELK){ TOC_MAN.clear(); TOC_SELK = selk; }
   const open = state.sec.size ? [...state.sec][0] : (hit ? hit.split('-')[1] : '');
@@ -1015,7 +1015,7 @@ function tocSync(hit){
   TOC_ON = TOC.get(hit) || null;
   if (!TOC_ON) return;
   TOC_ON.classList.add('on');
-  if (!TOC_ON.offsetParent) return;        // 被筛掉或所在节收起了，量不出位置
+  if (!follow || !TOC_ON.offsetParent) return; // 手动折叠不追踪滚动；隐藏的条目量不出位置
   const sb = document.getElementById('sidebar');
   const r = TOC_ON.getBoundingClientRect(), br = sb.getBoundingClientRect();
   if (r.top < br.top + 48 || r.bottom > br.bottom - 48) sb.scrollTop += r.top - br.top - sb.clientHeight / 3;
@@ -1208,7 +1208,7 @@ function wire(){
     // 点折叠箭头，或再点一次已选中的节：只收起或展开这节的目录，筛选不动
     if (dim === 'sec' && v && (ev.target.closest('.fold') || set.has(v))){
       const sub = TOC_SEC.get(v);
-      TOC_MAN.set(v, sub.hidden); tocSync(spyLast);
+      TOC_MAN.set(v, sub.hidden); tocSync(spyLast, { follow: false });
       return;
     }
     if (dim === 'sec'){
